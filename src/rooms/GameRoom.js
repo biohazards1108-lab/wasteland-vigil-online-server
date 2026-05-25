@@ -6,7 +6,6 @@ class GameRoom extends colyseus.Room {
   onCreate(options) {
     this.setState(new State());
 
-    // Handle messages from clients
     this.onMessage("move", (client, data) => {
       const player = this.state.players.get(client.sessionId);
       if (!player) return;
@@ -25,20 +24,16 @@ class GameRoom extends colyseus.Room {
     });
   }
 
-  onJoin(client, options) {
+  onJoin(client) {
     const player = new Player();
     player.id = client.sessionId;
     this.state.players.set(client.sessionId, player);
     console.log("Player joined:", client.sessionId);
   }
 
-  onLeave(client, consented) {
+  onLeave(client) {
     this.state.players.delete(client.sessionId);
     console.log("Player left:", client.sessionId);
-  }
-
-  onDispose() {
-    console.log("Room disposed");
   }
 }
 
