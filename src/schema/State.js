@@ -3,7 +3,14 @@ const { Schema, type, MapSchema } = schema;
 const { Player } = require("./Player");
 
 class State extends Schema {
-  @type({ map: Player }) players = new MapSchema();
+  constructor() {
+    super();
+    this.players = new MapSchema();
+  }
 }
+
+schema.defineTypes(State, {
+  players: { map: Player }
+});
 
 module.exports = { State };
